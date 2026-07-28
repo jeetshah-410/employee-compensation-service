@@ -6,5 +6,7 @@ namespace Employee_Compensation_Services.Models
         public string DepartmentName { get; set; } = default!;
         public string? Location { get; set; }
 
+        public ICollection<Employee> Employees { get; set; } = new List<Employee>();
+
     }
 }
