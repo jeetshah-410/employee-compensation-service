@@ -1,4 +1,5 @@
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Microsoft.Extensions.Configuration;
 using EmployeeCompensationService.Data;
 using EmployeeCompensationService.Repositories;
 using EmployeeCompensationService.Services;
@@ -16,9 +17,17 @@ builder.ConfigureFunctionsWebApplication();
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(
-        builder.Configuration["SqlConnectionString"]
-    ));
+{
+    var connectionString = Environment.GetEnvironmentVariable("SqlConnectionString") 
+        ?? builder.Configuration["SqlConnectionString"];
+
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        throw new InvalidOperationException("CRITICAL ERROR: Connection string is completely null. Check local.settings.json!");
+    }
+
+    options.UseSqlServer(connectionString);
+});
 
 // Repositories
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -28,8 +37,12 @@ builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ICompensationReportService, CompensationReportService>();
 
-builder.Services.AddOpenTelemetry()
-    .UseFunctionsWorkerDefaults()
-    .UseAzureMonitorExporter();
+var otel = builder.Services.AddOpenTelemetry()
+    .UseFunctionsWorkerDefaults();
+
+if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING")))
+{
+    otel.UseAzureMonitorExporter();
+}
 
 builder.Build().Run();
