@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ### 4. Update Employee
-PUT {{host}}/employees/
+PUT {{host}}/employees/1
 Content-Type: application/json
 
 {
@@ -35,7 +35,7 @@ Content-Type: application/json
 }
 
 ### 5. Delete Employee
-DELETE {{host}}/employees/1
+DELETE {{host}}/employees/999
 
 
 ### Part B: Compensation Reports
