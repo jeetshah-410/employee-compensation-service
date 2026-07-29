@@ -74,11 +74,11 @@ public class CompensationReportService : ICompensationReportService
                 EmployeeId,
                 FirstName + ' ' + LastName AS FullName,
                 Bonus,
-                RANK() OVER (
+                CAST(RANK() OVER (
                     ORDER BY
                         CASE WHEN Bonus IS NULL THEN 1 ELSE 0 END,
                         Bonus DESC
-                ) AS Rank
+                ) AS INT) AS Rank
             FROM Employee")
             .ToListAsync();
     }

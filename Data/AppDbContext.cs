@@ -14,6 +14,7 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Department>(entity =>
         {
+            entity.ToTable("Department");
             entity.HasKey(d => d.DepartmentId);
             entity.Property(d => d.DepartmentName).IsRequired().HasMaxLength(100);
             entity.Property(d => d.Location).HasMaxLength(100);
@@ -21,6 +22,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Employee>(entity =>
         {
+            entity.ToTable("Employee");
             entity.HasKey(e => e.EmployeeId);
             entity.Property(e => e.FirstName).IsRequired().HasMaxLength(50);
             entity.Property(e => e.LastName).IsRequired().HasMaxLength(50);
