@@ -13,16 +13,16 @@ POST {{host}}/employees
 Content-Type: application/json
 
 {
-    "firstName": "John",
-    "lastName": "Doe",
+    "firstName": "Ryan",
+    "lastName": "Reynolds",
     "departmentId": 1,
     "salary": 75000,
     "bonus": 5000,
-    "hireDate": "2024-01-15T00:00:00"
+    "hireDate": "2024-01-15"
 }
 
 ### 4. Update Employee
-PUT {{host}}/employees/1
+PUT {{host}}/employees/
 Content-Type: application/json
 
 {
@@ -31,11 +31,11 @@ Content-Type: application/json
     "departmentId": 1,
     "salary": 125000,
     "bonus": 360000,
-    "hireDate": "2020-01-15T00:00:00"
+    "hireDate": "2020-01-15"
 }
 
 ### 5. Delete Employee
-DELETE {{host}}/employees/999
+DELETE {{host}}/employees/1
 
 
 ### Part B: Compensation Reports
